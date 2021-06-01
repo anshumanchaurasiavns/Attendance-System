@@ -8,7 +8,7 @@ var path = require('path');
 let batchRouter = require('./routes/batchRoute');
 
 var app = express();
-
+require('./config/mongoose').mongoose;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
