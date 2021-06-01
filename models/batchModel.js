@@ -33,7 +33,7 @@ usersEnrolled:{
 batchSchema.method.toJSON = function(){
     let userDetails = this;
     let userObject = userDetails.toObject();
-    return lodash.pick(userObject, ['id','startDate','endDate','title','description']);
+    return lodash.pick(userObject, ['id','startDate','endDate','title','description','usersEnrolled']);
 }
 
 module.export = mongoose.model('Batch',batchSchema);

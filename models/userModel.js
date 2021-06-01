@@ -15,8 +15,8 @@ lastName:{
     type: String,
     required:true
 },
-token:{
-    type: String,
+tokens:{
+    type: Array,
     required:true
 }
 });
@@ -24,7 +24,7 @@ token:{
 userSchema.method.toJSON = function(){
     let userDetails = this;
     let userObject = userDetails.toObject();
-    return lodash.pick(userObject, ['id','firstName','lastName','token']);
+    return lodash.pick(userObject, ['id','firstName','lastName','tokens']);
 }
 
 
