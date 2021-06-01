@@ -50,3 +50,6 @@ userProgressSchema.method.toJSON = function(){
     let userObject = userDetails.toObject();
     return lodash.pick(userObject, ['id','userId','batchId','timeAttendant','attended','comment','rating']);
 }
+
+
+module.export = mongoose.model('UserProgress',userProgressSchema);

@@ -26,3 +26,7 @@ userSchema.method.toJSON = function(){
     let userObject = userDetails.toObject();
     return lodash.pick(userObject, ['id','firstName','lastName','token']);
 }
+
+
+
+module.export = mongoose.model('User',userSchema);

@@ -35,3 +35,5 @@ batchSchema.method.toJSON = function(){
     let userObject = userDetails.toObject();
     return lodash.pick(userObject, ['id','startDate','endDate','title','description']);
 }
+
+module.export = mongoose.model('Batch',batchSchema);
