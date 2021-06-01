@@ -1,4 +1,4 @@
-const { v4 } = require('uuid');
+const { V4 } = require('uuid');
 const mongoose = require('mongoose');
 const lodash = require('lodash');
 
@@ -52,4 +52,5 @@ userProgressSchema.method.toJSON = function(){
 }
 
 
-module.export = mongoose.model('UserProgress',userProgressSchema);
+
+module.exports = mongoose.model('UserProgress',userProgressSchema);

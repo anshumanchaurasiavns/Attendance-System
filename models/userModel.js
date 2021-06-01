@@ -1,4 +1,4 @@
-const { v4 } = require('uuid');
+const { V4 } = require('uuid');
 const mongoose = require('mongoose');
 const lodash = require('lodash');
 const userSchema = mongoose.Schema({
@@ -29,4 +29,4 @@ userSchema.method.toJSON = function(){
 
 
 
-module.export = mongoose.model('User',userSchema);
+module.exports = mongoose.model('User',userSchema);
