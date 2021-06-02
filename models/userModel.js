@@ -1,11 +1,11 @@
-const { V4 } = require('uuid');
+const { v4 } = require('uuid');
 const mongoose = require('mongoose');
 const lodash = require('lodash');
 const userSchema = mongoose.Schema({
     id:{
         type: String,
         required:true,
-        default:()=> V4()
+        default:()=> v4()
     },
 firstName:{
     type: String,

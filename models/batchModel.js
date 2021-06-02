@@ -1,4 +1,4 @@
-const { V4 } = require('uuid');
+const { v4 } = require('uuid');
 const mongoose = require('mongoose');
 const lodash = require('lodash');
 
@@ -6,7 +6,7 @@ const batchSchema = mongoose.Schema({
     id:{
         type: String,
         required:true,
-        default:()=> V4()
+        default:()=> v4()
     },
 startDate:{
     type: Date,
@@ -54,7 +54,7 @@ batchSchema.statics.getBatchDetailsForDay =function (dayStartTime, dayEndTime){
               ]);
 
             if(batchDetailResult && batchDetailResult.length > 0)
-                return resolve({status:200,result:batchDetailResult,message:"Server Error Happend"})
+                return resolve({status:200,result:batchDetailResult,message:"Batch Details For the Day fetched successfully."})
              else 
                 return resolve({status:204,result:null,message:"No Batch For the Day"})
         } catch (exception) {

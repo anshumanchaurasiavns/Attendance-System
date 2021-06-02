@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+let userProgressModel = require('../models/userProgressModel');
 
 router.post('/markAttendance/',async function(req, res, next) {
   try {
@@ -10,7 +11,7 @@ router.post('/markAttendance/',async function(req, res, next) {
     let rating = req.body.rating;
     let timeAttendant = new Date();
 
-    let batchDetailsResult = await batchModel.markChildrenAttendance(userId,batchId,attended ,comment ,rating ,timeAttendant );
+    let batchDetailsResult = await userProgressModel.markChildrenAttendance(userId,batchId,attended ,comment ,rating ,timeAttendant );
     res.send(batchDetailsResult);
     // if(batchDetailsResult.status === 200)
     //   res.send({status:200,result:batchDetailsResult.result,message:"Server Error Happend"});
@@ -18,6 +19,8 @@ router.post('/markAttendance/',async function(req, res, next) {
     //   res.send({status:500,result:null,message:"No Batch For the Day"});
 
   } catch (exception) {
+    console.log(exception)
+
     res.send({status:500,result:null,message:"Server Error Happend"});
   }
 });

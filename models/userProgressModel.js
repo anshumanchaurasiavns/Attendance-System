@@ -1,4 +1,4 @@
-const { V4 } = require('uuid');
+const { v4 } = require('uuid');
 const mongoose = require('mongoose');
 const lodash = require('lodash');
 
@@ -6,7 +6,7 @@ const userProgressSchema = mongoose.Schema({
     id:{
         type: String,
         required:true,
-        default:()=> V4()
+        default:()=> v4()
     },
     userId:{
     type: String,
@@ -32,7 +32,7 @@ rating:[{
     id:{
         type: String,
         required:true,
-        default:()=> V4()
+        default:()=> v4()
     },
     question:{
         type: String,
@@ -51,6 +51,32 @@ userProgressSchema.method.toJSON = function(){
     return lodash.pick(userObject, ['id','userId','batchId','timeAttendant','attended','comment','rating']);
 }
 
+
+
+userProgressSchema.statics.markChildrenAttendance =function (userId,batchId,attended ,comment ,rating ,timeAttendant){
+    let userProgressModel = this;
+    return new Promise(async (resolve,reject)=>{
+        try {
+            let batchObject = new userProgressModel({
+                userId:userId,
+                batchId: batchId,
+                timeAttendant: timeAttendant,
+                attended: attended,
+                comment: comment,
+                rating: rating
+            });
+            let batchDetailResult = await batchObject.save();
+
+            if(batchDetailResult)
+                return resolve({status:200,result:batchDetailResult,message:"Attendance of a Children Marked Successfully."})
+             else 
+                return resolve({status:204,result:null,message:"Error Happend While Marking Attendance."})
+        } catch (exception) {
+            console.log(exception)
+            return reject({status:500,result:null,message:"Server Error Happend"})
+        }
+    });
+};
 
 
 module.exports = mongoose.model('UserProgress',userProgressSchema);
