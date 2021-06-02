@@ -61,7 +61,6 @@ batchSchema.statics.getBatchDetailsForDay =function (dayStartTime, dayEndTime){
             return reject({status:500,result:null,message:"Server Error Happend"})
         }
     });
-
 };
 
 module.exports = mongoose.model('Batch',batchSchema);

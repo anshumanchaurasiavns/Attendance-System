@@ -13,11 +13,6 @@ router.post('/markAttendance/',async function(req, res, next) {
 
     let batchDetailsResult = await userProgressModel.markChildrenAttendance(userId,batchId,attended ,comment ,rating ,timeAttendant );
     res.send(batchDetailsResult);
-    // if(batchDetailsResult.status === 200)
-    //   res.send({status:200,result:batchDetailsResult.result,message:"Server Error Happend"});
-    // else
-    //   res.send({status:500,result:null,message:"No Batch For the Day"});
-
   } catch (exception) {
     console.log(exception)
 
