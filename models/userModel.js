@@ -27,6 +27,8 @@ userSchema.method.toJSON = function(){
     return lodash.pick(userObject, ['id','firstName','lastName','tokens']);
 }
 
+
+//Method to fetch user detail based upon userId
 userSchema.statics.getBatchDetailsForDay =function (userId){
     userModel = this;
     return new Promise(async (resolve,reject)=>{

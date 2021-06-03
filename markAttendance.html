@@ -19,7 +19,7 @@
 
         <form action="/userProgress/" method="GET">
             <div id="error">
-                
+
             </div>
             <div class="progress">
             </div>
@@ -30,11 +30,8 @@
     </center>
 </body>
 <script>
-    $(document).ready( function () {
-        //         let url = new URL('http://www.test.com/t.html?a=1&b=3&c=m2-m3-m4-m5');
-        // let searchParams = new URLSearchParams(url.search);
-        // console.log(searchParams.get('c'));
-        // console.log($.urlParam)
+    $(document).ready(function () {
+
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -64,25 +61,29 @@
         let userId = usersEnrolled.split(',');
         console.log(userId)
         let newContent = '';
+
+        //Render table for each User
         for (let i = 0; i < userId.length; i++) {
             let studentName = '';
-             $.ajax({
-                    url: 'http://localhost:3000/user/v1/getUserDetails/?userId='+userId[i],
-                    type: 'get'
+
+            //Fetch First Name and Last Name from Api
+            $.ajax({
+                url: 'http://localhost:3000/user/v1/getUserDetails/?userId=' + userId[i],
+                type: 'get'
+            })
+                .done(function (data) {
+                    console.log("success", data.result.firstName)
+
+                    studentName = data.result.firstName + " " + data.result.lastName;
+                    document.getElementById("studentName" + i).innerHTML = studentName;
+
                 })
-                    .done(function (data) {
-                        console.log("success", data.result.firstName)
-
-                        studentName = data.result.firstName+" "+data.result.lastName;
-                        document.getElementById("studentName"+i).innerHTML = studentName;
-
-                    })
-                    .fail(function () {
-                        console.log("error")
-                        // Show an error or something fancy
-                    });
-                    console.log("stu",studentName)
-            newContent = newContent + '<table><th>Batch Name: ' + title + '</th><th>Student Name: <div id="studentName'+i+'"></div></th>'+
+                .fail(function () {
+                    console.log("error")
+                    // Show an error or something fancy
+                });
+            console.log("stu", studentName)
+            newContent = newContent + '<table><th>Batch Name: ' + title + '</th><th>Student Name: <div id="studentName' + i + '"></div></th>' +
                 '<input type="hidden" id="usersEnrolled" name="userId' + i + '" value="' + userId[i] + '">' +
                 '<tr>' +
                 '<td>' +
@@ -332,7 +333,7 @@
         $(".progress").replaceWith(newContent);
 
 
-
+        //on Click of submit hit api end point
         $('.submitbutton').click(function (e) {
             e.preventDefault();
 
@@ -388,60 +389,17 @@
                 })
                     .done(function (data) {
                         console.log("success", data)
-                        if(data.status == 200)
-                        location.replace("http://127.0.0.1:5500/logoutPage.html");
-                        else 
-                        document.getElementById("error").innerHTML = 'Invalid Input, Please Give Proper Parameters';
+                        if (data.status == 200)
+                            location.replace("http://127.0.0.1:5500/logoutPage.html");
+                        else
+                            document.getElementById("error").innerHTML = 'Invalid Input, Please Give Proper Parameters';
 
                     })
                     .fail(function () {
                         console.log("error")
                         // Show an error or something fancy
                     });
-                //             e.preventDefault();
 
-                //   var data = [];
-                //   let dataObject = {};
-                //   $(":input")
-                //     .each(function(inpu) {
-                //       var $this = $(this);
-                //     //   $("#batchId")
-                //     let fieldName = this.name;
-                //         console.log("here", this.type)
-                //       // Collect the data with the id and value
-                //       if( fieldName != "" && fieldName != "done" &&this.type !="radio"){
-
-                //             // if()
-                //           dataObject[fieldName] = this.value;
-                //         // console.log(dataObject)
-                //       }
-
-                //       if(fieldName === "done"){
-
-                //         let answer = $("input:radio[name ='question1']:checked").val()
-
-                //           data.push(dataObject);
-                //           dataObject = {};
-                //       }
-
-                //     });
-
-                //     console.log("der",$("input:hidden[name ='userId']").val())
-                //     console.log("data",data)
-                //   $.ajax({
-                //     url: '/update-resume',
-                //     type: 'post',
-                //     data: { data: JSON.stringify(data) }
-                //   })
-                //     .done(function(data) {
-                //       if (data.success) {
-                //          // Lazy: refresh window
-                //          window.location.reload();
-                //       }
-                //     })
-                //     .fail(function() {
-                //       // Show an error or something fancy
-                //     });
             }
         });
 

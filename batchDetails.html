@@ -29,9 +29,8 @@
 </body>
 <script>
     let batchDetails = [];
-    
 
-
+    //Set Cookies
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -39,6 +38,7 @@
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 
+    //Fetch Cookies
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
@@ -55,10 +55,10 @@
     }
 
     function batchSubmit(e) {
-
-        setCookie("batchId", batchDetails[e].id,1);
-        setCookie("title", batchDetails[e].title,1);
-        setCookie("usersEnrolled", batchDetails[e].usersEnrolled,1);
+        //Set Cookies and Change Screnn to mark attendance
+        setCookie("batchId", batchDetails[e].id, 1);
+        setCookie("title", batchDetails[e].title, 1);
+        setCookie("usersEnrolled", batchDetails[e].usersEnrolled, 1);
 
         console.log(getCookie("usersEnrolled"))
 
@@ -78,7 +78,7 @@
 
             let batchDate = document.getElementById('batchDate').value;
 
-
+            //Ajax call to api to fetch Batch Details
             $.ajax({
                 url: 'http://localhost:3000/batch/v2/getBatchDetails/?date=' + batchDate,
                 type: 'get'
@@ -88,7 +88,7 @@
 
                         data = data.result;
                         let secondLoad = '';
-                        batchDetails=data
+                        batchDetails = data
                         for (let i = 0; i < data.length; i++) {
 
 

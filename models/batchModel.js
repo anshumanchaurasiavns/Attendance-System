@@ -2,6 +2,7 @@ const { v4 } = require('uuid');
 const mongoose = require('mongoose');
 const lodash = require('lodash');
 
+//Schema Defination for Batch 
 const batchSchema = mongoose.Schema({
     id:{
         type: String,
@@ -36,6 +37,7 @@ batchSchema.method.toJSON = function(){
     return lodash.pick(userObject, ['id','startDate','endDate','title','description','usersEnrolled']);
 }
 
+//Method to fetch Batches based upon StartTime and endTime
 batchSchema.statics.getBatchDetailsForDay =function (dayStartTime, dayEndTime){
     batchModel = this;
     return new Promise(async (resolve,reject)=>{

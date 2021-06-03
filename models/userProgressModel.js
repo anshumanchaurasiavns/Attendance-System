@@ -52,7 +52,7 @@ userProgressSchema.method.toJSON = function(){
 }
 
 
-
+//method to Store Feedback of user into mongodb
 userProgressSchema.statics.markChildrenAttendance =function (userId,batchId,attended ,comment ,rating ,timeAttendant){
     let userProgressModel = this;
     return new Promise(async (resolve,reject)=>{

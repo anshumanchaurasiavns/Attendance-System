@@ -17,6 +17,7 @@ router.post('/markAttendance/',async function(req, res, next) {
     let rating = req.body.rating;
     let timeAttendant = new Date();
 
+    //Method to store Feedback into the db.
     let batchDetailsResult = await userProgressModel.markChildrenAttendance(userId,batchId,attended ,comment ,rating ,timeAttendant );
     res.send(batchDetailsResult);
   } catch (exception) {
@@ -36,6 +37,7 @@ router.post('/v2/markAttendance/',async function(req, res, next) {
     let rating = req.body.rating;
     let timeAttendant = new Date();
 
+    //Method to store Feedback into the db.
     let batchDetailsResult = await userProgressModel.markChildrenAttendance(userId,batchId,attended ,comment ,rating ,timeAttendant );
     res.send(batchDetailsResult);
   } catch (exception) {
@@ -45,13 +47,13 @@ router.post('/v2/markAttendance/',async function(req, res, next) {
   }
 });
 
-router.get('/',async function(req, res, next) {
+// router.get('/',async function(req, res, next) {
 
-  let batchId = req.query.batchId;
-  let usersEnrolled = req.query.usersEnrolled;
-  usersEnrolled = usersEnrolled.split(',');
-  // console.log(batchId, typeof(usersEnrolled) )
-  res.render("markAttendance",{ batchId:batchId, usersEnrolled:usersEnrolled });
+//   let batchId = req.query.batchId;
+//   let usersEnrolled = req.query.usersEnrolled;
+//   usersEnrolled = usersEnrolled.split(',');
+//   // console.log(batchId, typeof(usersEnrolled) )
+//   res.render("markAttendance",{ batchId:batchId, usersEnrolled:usersEnrolled });
 
-});
+// });
 module.exports = router;

@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "60b6452366480a01c4dfe38d"
+  },
+  "id": "10002",
+  "title": "First Batch",
+  "description": "Batch Description For Details",
+  "usersEnrolled": [
+    "673hgf-7645u83-87653uf84449",
+    "673hgf-7645u83-87653uf844495tr"
+  ],
+  "startDate": {
+    "$date": "2021-06-01T14:33:54Z"
+  },
+  "endDate": {
+    "$date": "2021-06-01T19:33:54Z"
+  }
+},{
+  "_id": {
+    "$oid": "60b86f191093c12a98b58d78"
+  },
+  "id": "50702",
+  "title": "Second Batch",
+  "description": "Batch Description For Second Details",
+  "usersEnrolled": [
+    "673hgf-7645u83-87653uf844495tr"
+  ],
+  "startDate": {
+    "$date": "2021-06-01T14:33:54Z"
+  },
+  "endDate": {
+    "$date": "2021-06-01T19:33:54Z"
+  }
+}]
