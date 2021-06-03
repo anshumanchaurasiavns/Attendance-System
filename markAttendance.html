@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Children Attendance</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
+
+</head>
+
+<body>
+    </br>
+    </br>
+    <br>
+    <br>
+    <br>
+    <center>
+        <h2>Pass Batch Details to Mark Attendance:</h2>
+
+        <form action="/userProgress/" method="GET">
+            <div id="error">
+                
+            </div>
+            <div class="progress">
+            </div>
+
+            <span class="submitbutton"><input type="submit"> </span>
+
+        </form>
+    </center>
+</body>
+<script>
+    $(document).ready( function () {
+        //         let url = new URL('http://www.test.com/t.html?a=1&b=3&c=m2-m3-m4-m5');
+        // let searchParams = new URLSearchParams(url.search);
+        // console.log(searchParams.get('c'));
+        // console.log($.urlParam)
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        let usersEnrolled = getCookie("usersEnrolled");
+        let title = getCookie("title");
+        let batchId = getCookie("batchId");
+
+        let userId = usersEnrolled.split(',');
+        console.log(userId)
+        let newContent = '';
+        for (let i = 0; i < userId.length; i++) {
+            let studentName = '';
+             $.ajax({
+                    url: 'http://localhost:3000/user/v1/getUserDetails/?userId='+userId[i],
+                    type: 'get'
+                })
+                    .done(function (data) {
+                        console.log("success", data.result.firstName)
+
+                        studentName = data.result.firstName+" "+data.result.lastName;
+                        document.getElementById("studentName"+i).innerHTML = studentName;
+
+                    })
+                    .fail(function () {
+                        console.log("error")
+                        // Show an error or something fancy
+                    });
+                    console.log("stu",studentName)
+            newContent = newContent + '<table><th>Batch Name: ' + title + '</th><th>Student Name: <div id="studentName'+i+'"></div></th>'+
+                '<input type="hidden" id="usersEnrolled" name="userId' + i + '" value="' + userId[i] + '">' +
+                '<tr>' +
+                '<td>' +
+                'Comment:' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" name="comment' + i + '">' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Present' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" name="attended' + i + '">' +
+                '</td>' +
+                '</tr>' +
+                '<tr></tr>' +
+                '<tr></tr>' +
+                '<tr>' +
+                '<td>' +
+                'Question 1' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" name="questionBox1' + i + '">' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Rating' +
+                '</td>' +
+                '<td>' +
+                '<input type="radio" id="answer1' + i + '" name="question1' + i + '" value="1">' +
+                '<label for="answer1' + i + '">1</label>' +
+
+                '<input type="radio" id="answer2' + i + '" name="question1' + i + '" value="2">' +
+                '<label for="answer2' + i + '">2</label>' +
+
+                '<input type="radio" id="answer3' + i + '" name="question1' + i + '" value="3">' +
+                '<label for="answer3' + i + '">3</label>' +
+
+                '<input type="radio" id="answer4' + i + '" name="question1' + i + '" value="4">' +
+                '<label for="answer4' + i + '">4</label>' +
+
+                '<input type="radio" id="answer5' + i + '" name="question1' + i + '" value="5">' +
+                '<label for="answer5' + i + '">5</label>' +
+
+                '<input type="radio" id="answer6' + i + '" name="question1' + i + '" value="6">' +
+                '<label for="answer6' + i + '">6</label>' +
+
+                '<input type="radio" id="answer7' + i + '" name="question1' + i + '" value="7">' +
+                '<label for="answer7' + i + '">7</label>' +
+
+                '<input type="radio" id="answer8' + i + '" name="question1' + i + '" value="8">' +
+                '<label for="answer8' + i + '">8</label>' +
+
+                '<input type="radio" id="answer9' + i + '" name="question1' + i + '" value="9">' +
+                '<label for="answer9' + i + '">9</label>' +
+
+                '<input type="radio" id="answer10' + i + '" name="question1' + i + '" value="10">' +
+                '<label for="answer10' + i + '">10</label>' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Question 2' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" name="questionBox2' + i + '">' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Rating' +
+                '</td>' +
+                '<td>' +
+                '<input type="radio" id="answer1' + i + '" name="question2' + i + '" value="1">' +
+                '<label for="answer1' + i + '">1</label>' +
+
+                '<input type="radio" id="answer2' + i + '" name="question2' + i + '" value="2">' +
+                '<label for="answer2' + i + '">2</label>' +
+
+                '<input type="radio" id="answer3' + i + '" name="question2' + i + '" value="3">' +
+                '<label for="answer3' + i + '">3</label>' +
+
+                '<input type="radio" id="answer4' + i + '" name="question2' + i + '" value="4">' +
+                '<label for="answer4' + i + '">4</label>' +
+
+                '<input type="radio" id="answer5' + i + '" name="question2' + i + '" value="5">' +
+                '<label for="answer5' + i + '">5</label>' +
+
+                '<input type="radio" id="answer6' + i + '" name="question2' + i + '" value="6">' +
+                '<label for="answer6' + i + '">6</label>' +
+
+                '<input type="radio" id="answer7' + i + '" name="question2' + i + '" value="7">' +
+                '<label for="answer7' + i + '">7</label>' +
+
+                '<input type="radio" id="answer8' + i + '" name="question2' + i + '" value="8">' +
+                '<label for="answer8' + i + '">8</label>' +
+
+                '<input type="radio" id="answer9' + i + '" name="question2' + i + '" value="9">' +
+                '<label for="answer9' + i + '">9</label>' +
+
+                '<input type="radio" id="answer10' + i + '" name="question2' + i + '" value="10">' +
+                '<label for="answer10' + i + '">10</label>' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Question 3' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" name="questionBox3' + i + '">' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Rating' +
+                '</td>' +
+                '<td>' +
+                '<input type="radio" id="answer1' + i + '" name="question3' + i + '" value="1">' +
+                '<label for="answer1' + i + '">1</label>' +
+
+                '<input type="radio" id="answer2' + i + '" name="question3' + i + '" value="2">' +
+                '<label for="answer2' + i + '">2</label>' +
+
+                '<input type="radio" id="answer3' + i + '" name="question3' + i + '" value="3">' +
+                '<label for="answer3' + i + '">3</label>' +
+
+                '<input type="radio" id="answer4' + i + '" name="question3' + i + '" value="4">' +
+                '<label for="answer4' + i + '">4</label>' +
+
+                '<input type="radio" id="answer5' + i + '" name="question3' + i + '" value="5">' +
+                '<label for="answer5' + i + '">5</label>' +
+
+                '<input type="radio" id="answer6' + i + '" name="question3' + i + '" value="6">' +
+                '<label for="answer6' + i + '">6</label>' +
+
+                '<input type="radio" id="answer7' + i + '" name="question3' + i + '" value="7">' +
+                '<label for="answer7' + i + '">7</label>' +
+
+                '<input type="radio" id="answer8' + i + '" name="question3' + i + '" value="8">' +
+                '<label for="answer8' + i + '">8</label>' +
+
+                '<input type="radio" id="answer9' + i + '" name="question3' + i + '" value="9">' +
+                '<label for="answer9' + i + '">9</label>' +
+
+                '<input type="radio" id="answer10' + i + '" name="question3' + i + '" value="10">' +
+                '<label for="answer10' + i + '">10</label>' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Question 4' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" name="questionBox4' + i + '">' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Rating' +
+                '</td>' +
+                '<td>' +
+                '<input type="radio" id="answer1' + i + '" name="question4' + i + '" value="1">' +
+                '<label for="answer1' + i + '">1</label>' +
+
+                '<input type="radio" id="answer2' + i + '" name="question4' + i + '" value="2">' +
+                '<label for="answer2' + i + '">2</label>' +
+
+                '<input type="radio" id="answer3' + i + '" name="question4' + i + '" value="3">' +
+                '<label for="answer3' + i + '">3</label>' +
+
+                '<input type="radio" id="answer4' + i + '" name="question4' + i + '" value="4">' +
+                '<label for="answer4' + i + '">4</label>' +
+
+                '<input type="radio" id="answer5' + i + '" name="question4' + i + '" value="5">' +
+                '<label for="answer5' + i + '">5</label>' +
+
+                '<input type="radio" id="answer6' + i + '" name="question4' + i + '" value="6">' +
+                '<label for="answer6' + i + '">6</label>' +
+
+                '<input type="radio" id="answer7' + i + '" name="question4' + i + '" value="7">' +
+                '<label for="answer7' + i + '">7</label>' +
+
+                '<input type="radio" id="answer8' + i + '" name="question4' + i + '" value="8">' +
+                '<label for="answer8' + i + '">8</label>' +
+
+                '<input type="radio" id="answer9' + i + '" name="question4' + i + '" value="9">' +
+                '<label for="answer9' + i + '">9</label>' +
+
+                '<input type="radio" id="answer10' + i + '" name="question4' + i + '" value="10">' +
+                '<label for="answer10' + i + '">10</label>' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Question 5' +
+                '</td>' +
+                '<td>' +
+                '<input type="text" name="questionBox5' + i + '">' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' +
+                'Rating' +
+                '</td>' +
+                '<td>' +
+                '<input type="radio" id="answer1' + i + '" name="question5' + i + '" value="1">' +
+                '<label for="answer1' + i + '">1</label>' +
+
+                '<input type="radio" id="answer2' + i + '" name="question5' + i + '" value="2">' +
+                '<label for="answer2' + i + '">2</label>' +
+
+                '<input type="radio" id="answer3' + i + '" name="question5' + i + '" value="3">' +
+                '<label for="answer3' + i + '">3</label>' +
+
+                '<input type="radio" id="answer4' + i + '" name="question5' + i + '" value="4">' +
+                '<label for="answer4' + i + '">4</label>' +
+
+                '<input type="radio" id="answer5' + i + '" name="question5' + i + '" value="5">' +
+                '<label for="answer5' + i + '">5</label>' +
+
+                '+<input type="radio" id="answer6' + i + '" name="question5' + i + '" value="6">' +
+                '<label for="answer6' + i + '">6</label>' +
+
+                '<input type="radio" id="answer7' + i + '" name="question5' + i + '" value="7">' +
+                '<label for="answer7' + i + '">7</label>' +
+
+                '<input type="radio" id="answer8' + i + '" name="question5' + i + '" value="8">' +
+                '<label for="answer8' + i + '">8</label>' +
+
+                '<input type="radio" id="answer9' + i + '" name="question5' + i + '" value="9">' +
+                '<label for="answer9' + i + '">9</label>' +
+
+                '<input type="radio" id="answer10' + i + '" name="question5' + i + '" value="10">' +
+                '<label for="answer10' + i + '">10</label>' +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td>' +
+                '<input type="hidden" name="done">' +
+                '</td></tr></table><br><br>';
+
+        }
+        $(".progress").replaceWith(newContent);
+
+
+
+        $('.submitbutton').click(function (e) {
+            e.preventDefault();
+
+            let data;
+            let rating;
+            let ratingObject;
+
+            for (let i = 0; i < userId.length; i++) {
+                data = {};
+                rating = [];
+                ratingObject = {};
+
+                data['userId'] = $("input:hidden[name ='userId" + i + "']").val();
+                data['batchId'] = batchId;
+                data['comment'] = $("input:text[name ='comment" + i + "']").val();
+                data['attended'] = $("input:text[name ='attended" + i + "']").val();
+
+                ratingObject['question'] = $("input:text[name ='questionBox1" + i + "']").val();
+                ratingObject['answer'] = $("input:radio[name ='question1" + i + "']:checked").val()
+
+                rating.push(ratingObject);
+                ratingObject = {};
+                ratingObject['question'] = $("input:text[name ='questionBox2" + i + "']").val();
+                ratingObject['answer'] = $("input:radio[name ='question2" + i + "']:checked").val()
+
+                rating.push(ratingObject);
+                ratingObject = {};
+
+                ratingObject['question'] = $("input:text[name ='questionBox3" + i + "']").val();
+                ratingObject['answer'] = $("input:radio[name ='question3" + i + "']:checked").val()
+
+                rating.push(ratingObject);
+                ratingObject = {};
+
+                ratingObject['question'] = $("input:text[name ='questionBox4" + i + "']").val();
+                ratingObject['answer'] = $("input:radio[name ='question4" + i + "']:checked").val()
+
+                rating.push(ratingObject);
+                ratingObject = {};
+
+                ratingObject['question'] = $("input:text[name ='questionBox5" + i + "']").val();
+                ratingObject['answer'] = $("input:radio[name ='question5" + i + "']:checked").val()
+
+                rating.push(ratingObject);
+
+                data['rating'] = rating;
+                console.log(data)
+
+                $.ajax({
+                    url: 'http://localhost:3000/userProgress/markAttendance/',
+                    type: 'post',
+                    data: { 'data': JSON.stringify(data) }
+                })
+                    .done(function (data) {
+                        console.log("success", data)
+                        if(data.status == 200)
+                        location.replace("http://127.0.0.1:5500/logoutPage.html");
+                        else 
+                        document.getElementById("error").innerHTML = 'Invalid Input, Please Give Proper Parameters';
+
+                    })
+                    .fail(function () {
+                        console.log("error")
+                        // Show an error or something fancy
+                    });
+                //             e.preventDefault();
+
+                //   var data = [];
+                //   let dataObject = {};
+                //   $(":input")
+                //     .each(function(inpu) {
+                //       var $this = $(this);
+                //     //   $("#batchId")
+                //     let fieldName = this.name;
+                //         console.log("here", this.type)
+                //       // Collect the data with the id and value
+                //       if( fieldName != "" && fieldName != "done" &&this.type !="radio"){
+
+                //             // if()
+                //           dataObject[fieldName] = this.value;
+                //         // console.log(dataObject)
+                //       }
+
+                //       if(fieldName === "done"){
+
+                //         let answer = $("input:radio[name ='question1']:checked").val()
+
+                //           data.push(dataObject);
+                //           dataObject = {};
+                //       }
+
+                //     });
+
+                //     console.log("der",$("input:hidden[name ='userId']").val())
+                //     console.log("data",data)
+                //   $.ajax({
+                //     url: '/update-resume',
+                //     type: 'post',
+                //     data: { data: JSON.stringify(data) }
+                //   })
+                //     .done(function(data) {
+                //       if (data.success) {
+                //          // Lazy: refresh window
+                //          window.location.reload();
+                //       }
+                //     })
+                //     .fail(function() {
+                //       // Show an error or something fancy
+                //     });
+            }
+        });
+
+    });
+
+</script>
+
+</html>

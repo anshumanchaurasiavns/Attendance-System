@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Children Attendance</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
+
+</head>
+
+<body>
+    </br>
+    </br>
+    <br>
+    <br>
+    <br>
+    <center>
+        <h2>Pass Date to Get Batch Details:</h2>
+
+
+        <div class="batchDetail" id="batchDetail">
+
+        </div>
+        <br>
+
+
+
+    </center>
+</body>
+<script>
+    let batchDetails = [];
+    
+
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function batchSubmit(e) {
+
+        setCookie("batchId", batchDetails[e].id,1);
+        setCookie("title", batchDetails[e].title,1);
+        setCookie("usersEnrolled", batchDetails[e].usersEnrolled,1);
+
+        console.log(getCookie("usersEnrolled"))
+
+        location.replace("http://127.0.0.1:5500/markAttendance.html")
+    }
+
+    let firstLoad = 'Enter Batch Date:  <input type="date" id="batchDate" name="batchDate">' +
+        '<span class="submitbutton"><input type="submit"> </span>';
+
+
+
+    $(document).ready(function () {
+        document.getElementById("batchDetail").innerHTML = firstLoad;
+
+        $('.submitbutton').click(function (e) {
+            e.preventDefault();
+
+            let batchDate = document.getElementById('batchDate').value;
+
+
+            $.ajax({
+                url: 'http://localhost:3000/batch/v2/getBatchDetails/?date=' + batchDate,
+                type: 'get'
+            })
+                .done(function (data) {
+                    if (data.status == 200) {
+
+                        data = data.result;
+                        let secondLoad = '';
+                        batchDetails=data
+                        for (let i = 0; i < data.length; i++) {
+
+
+                            secondLoad = secondLoad + ' <table>' +
+                                '<tr>' +
+                                '<td>' +
+                                'Batch Name:' +
+                                '</td>' +
+                                '<td>' +
+                                data[i].title +
+                                '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td>' +
+                                'Batch Desc:' +
+                                '</td>' +
+                                '<td>' +
+                                data[i].description +
+                                '</td>' +
+                                '<tr><td></td>' +
+                                '<td>' +
+                                '<button id="' + i + '" onClick="batchSubmit(this.id)">            Submit      </button>' +
+                                '<input type="hidden"  name="batchSubmit" >' +
+                                '</td>' +
+                                '</tr>' +
+                                '</table><br>';
+
+
+                        }
+                        console.log("success", secondLoad)
+
+
+                        document.getElementById("batchDetail").innerHTML = secondLoad;
+
+
+
+                    }
+                })
+                .fail(function () {
+                    console.log("error")
+                    // Show an error or something fancy
+                });
+        });
+
+
+
+    });
+</script>

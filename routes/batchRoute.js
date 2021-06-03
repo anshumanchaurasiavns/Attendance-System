@@ -6,7 +6,7 @@ let batchModel = require('../models/batchModel');
 router.get('/getBatchDetails/',async function(req, res, next) {
   try {
     let batchDate = req.query.date;
-
+    console.log(req.query.authorization)
     batchDate = new Date(batchDate);
 
     let dayStartTime = await extractDate(batchDate, 0, 0, 0);
@@ -20,7 +20,35 @@ router.get('/getBatchDetails/',async function(req, res, next) {
     }
 
     let batchDetailsResult = await batchModel.getBatchDetailsForDay(dayStartTime,dayEndTime);
-    
+    // console.log(batchDetailsResult)
+    res.render("batchDetails",batchDetailsResult);
+
+    // res.send(batchDetailsResult);
+
+  } catch (exception) {
+    res.send({status:500,result:null,message:"Server Error Happend"});
+  }
+});
+
+router.get('/v2/getBatchDetails/',async function(req, res, next) {
+  try {
+    let batchDate = req.query.date;
+    batchDate = new Date(batchDate);
+
+    let dayStartTime = await extractDate(batchDate, 0, 0, 0);
+    let dayEndTime = await extractDate(batchDate, 23, 59, 59);
+
+    if(dayStartTime.status ===200 && dayEndTime.status === 200){
+      dayStartTime = dayStartTime.result
+      dayEndTime = dayEndTime.result
+    } else {
+        res.send({status:500,result:null,message:"Server Error Happend"});
+    }
+
+    let batchDetailsResult = await batchModel.getBatchDetailsForDay(dayStartTime,dayEndTime);
+    // console.log(batchDetailsResult)
+    // res.render("batchDetails",batchDetailsResult);
+
     res.send(batchDetailsResult);
 
   } catch (exception) {

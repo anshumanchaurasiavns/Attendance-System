@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Get Batch Details</title>
+        <title>Batch Details Page</title>
     </head>
 
     <body>
-
+    </br>
+</br>
+        <br>
+        <br>
+        <br>
    
-<h2>Batch Details:</h2>
-        <form action="/batch/getBatchDetails/" method="GET">
-            <input type="date" id="date" name="date">
-            <input type="submit" >
-        </form>
+        <center>
+<h2>Batch Details</h2>
+
+<%   if(status === 200){ 
+    %> 
+       <table>
+        <%
+        result.forEach(function(itr){
+            %>
+               <tr>
+                <td>Mark Attendance For <%= itr.title %>:</td>
+
+                   <td>
+                    <form action="/userProgress/" method="GET">
+            <input type="hidden"  name="batchId" value="<%= itr.id %>">
+            <input type="hidden"  name="usersEnrolled" value="<%= itr.usersEnrolled %>">
+
+                        <input type="submit" >
+                    </form>
+                   </td>
+               </tr>
+               <%
+                });
+                %>
+
+        
+       </table>
+          
+        <% }
+        %> 
+</center>
+
     </body>
 </html>

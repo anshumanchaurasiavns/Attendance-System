@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Children Attendance</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    </head>
+    <body>
+    </br>
+</br>
+        <br>
+        <br>
+        <br>
+        <center>
+<h2>Pass Date to Get Batch Details:</h2>
+<table>
+    <%
+    usersEnrolled.forEach(function(itr){
+        %>
+           <tr>
+            <td>Mark Attendance For <%= itr %>:</td>
+
+               <td>
+                <form action="/userProgress/" method="GET">
+        <input type="hidden" id="batchId" name="batchId" value="<%= batchId %>">
+        <input type="hidden" id="usersEnrolled" name="usersEnrolled" value="<%= itr %>">
+
+                    <span class="submitbutton"><input type="submit" > </span>
+                </form>
+               </td>
+           </tr>
+           <%
+            });
+            %>
+
+    
+   </table>
+    </center>
+    </body>
+    <script>
+        $('.submitbutton').click(function (e) {
+            e.preventDefault();
+
+  var data = [];
+  $(this)
+    .find('input')
+    .each(function() {
+      var $this = $(this);
+        console.log("here")
+      // Collect the data with the id and value
+      data.push({
+        id: $this.data('batchId'),
+        value: $this.val()
+      });
+    });
+
+    console.log("data",data)
+//   $.ajax({
+//     url: '/update-resume',
+//     type: 'post',
+//     data: { data: JSON.stringify(data) }
+//   })
+//     .done(function(data) {
+//       if (data.success) {
+//          // Lazy: refresh window
+//          window.location.reload();
+//       }
+//     })
+//     .fail(function() {
+//       // Show an error or something fancy
+//     });
+
+    });
+    </script>
+</html>
